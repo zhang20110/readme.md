@@ -1,0 +1,175 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+html,
+body {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(244, 244, 244);
+}
+button {
+    cursor: pointer;
+}
+li {
+    list-style: none;
+}
+a {
+    text-decoration: none;
+}
+h1 {
+    margin: 0;
+    padding:10px 80px;
+    background-color: rgba(34, 34, 34);
+    color: #ccc;
+}
+h1 small {
+    float: right;
+}
+.container {
+    overflow: auto;
+    margin: 20px auto;
+    width: 90%;
+}
+.grade {
+    height: 50px;
+    border-bottom: 2px solid rgb(217, 217, 217);
+    /* background-color: pink; */
+}
+.grade li{
+    padding: 0 15px;
+    float: left;
+    font-size: 20px;
+    line-height: 50px;
+    border-radius: 10px;
+}
+.gradeActive {
+    background-color: rgb(153, 153, 153);
+}
+.grade li:hover {
+    background-color: rgb(153, 153, 153);
+}
+/*  addBox 的css*/
+.addBox {
+    margin-top: 20px;
+    border: 1px solid transparent;
+    border-bottom: 2px solid #ccc;
+} 
+.addBox button {
+    float: right;
+    width: 40px;
+    height: 30px;
+    outline: none;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-size: 15px;
+    color: white;
+    background-color: rgb(91, 192, 222);
+}
+.addBox .addContext {
+    overflow: hidden;
+    /* display: none; */
+    height: 0;
+    position: relative;
+    margin-top: 33px;
+    /* background-color: pink; */
+    border: 1px solid transparent;
+    border-top: 1px solid #ccc;
+}
+.addBox .addContext p{
+    margin: 10px;
+    font-size: 20px;
+}
+.addBox .addContext input {
+    margin-left: 15px;
+    width: 260px;
+    height: 25px;
+    border: 1px solid rgb(121, 121, 121);
+    border-radius: 5px;
+}
+.addBox .addContext textarea {
+    margin-left: 53px;
+    outline: none;
+    resize: none;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    vertical-align: top;
+}
+.addBox .addContext button {
+    float: none;
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+}
+/* box 的css */
+.box {
+    display: inline-block;
+    margin-top: 20px;
+    margin-right: 20px;
+    width: 330px;
+    border: 1px solid #ccc;
+}
+.box .title h2 {
+    margin-bottom: 10px;
+}
+.box .title small {
+    display: block;
+    margin-bottom: 7px;
+    color: rgb(105, 105, 105);
+}
+.box .homework {
+    position: relative;
+    overflow: hidden;
+    height: 115px;
+    background-color: rgb(93, 240, 9);
+}
+.box  .visible {
+    overflow: hidden;
+    height: 115px;
+}
+.box input {
+    width: 75px;
+    height: 28px;
+}
+.box .homework button,
+.box .target button {
+    padding: 5px;
+    font-size: 15px;
+    background-color: rgb(20, 177, 250);
+    border: 1px solid transparent;
+    border-radius: 2px;
+    color: white;
+    outline: none;
+}
+.box .homework button:nth-of-type(1),
+.box .target button:nth-of-type(1) {
+    position: absolute;
+    right: 5px;
+    bottom: 3px;
+}
+.box .homework button:nth-of-type(2),
+.box .target button:nth-of-type(2) {
+    float: right;
+    margin-right: 55px;
+    margin-top: 12.5px;
+}
+.box .homework span,
+.box .target span {
+    display: block;
+    margin-left: 70px;
+    margin-top: 5px;
+    color: rgb(255, 0, 0);
+    font-size: 29px;
+}
+.box .hidden {
+    height: 115px;
+}
+.box .hidden p {
+    height: 100%;
+}
+.box .target {
+    position: relative;
+    overflow: hidden;
+    height: 115px;
+    background-color: rgb(210, 241, 137);
+}

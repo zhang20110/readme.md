@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>教学进度统计-登录</title>
+  <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+  <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+  <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+  <!-- 站点图标 -->
+  <!-- <link rel="shortcut icon" href="img/siteFavicon.ico" type="image/x-icon"> -->
+  <link rel="shortcut icon" href="img/tubiao.ico" type="image/x-icon">
+  <script src="js/jQuery.min.js"></script>
+  <script src="bootstrap/js/bootstrap.min.js"></script>
+  <script src="js/ajax.js"></script>
+  <link rel="stylesheet" href="css/login.css">
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div class="box center">
+    <!-- 登录页面 -->
+    <div class="login">
+      <!-- 标题栏 -->
+      <div style="height: 40px;">
+        <span class="caret" style="float: left; transform: translateY(20px) scale(1.6) rotate(-90deg);"></span>
+        <h3 style="float:left; margin: 0;margin-left: 60px; font-size: 28px; line-height: 40px; height: 40px;">教学信息统计系统
+        </h3>
+        <span class="caret" style="float: right; transform: translateY(20px) scale(1.6) rotate(90deg);"></span>
+      </div>
+      <!-- 账号栏 -->
+      <div class="input-group" style="margin-top: 25px">
+        <span class="input-group-addon" style="height: 41px; border-radius: 50% 0 0 50%;"><span
+            class="glyphicon glyphicon-user"></span></span>
+        <input type="text" class="form-control" placeholder="账号" aria-describedby="sizing-addon1" autofocus="autofocus"
+          style="height: 40px; border-radius: 0 25px 25px 0;">
+        <small class="reminder">账号或密码错误</small>
+      </div>
+      <!-- 密码栏 -->
+      <div class="input-group" style="margin-top: 25px">
+        <span class="input-group-addon" style="height: 41px; border-radius: 50% 0 0 50%"><span
+            class="glyphicon glyphicon-lock"></span></span>
+        <input type="password" class="form-control" placeholder="密码" aria-describedby="sizing-addon1"
+          style="height: 40px; border-radius: 0 25px 25px 0;">
+      </div>
+      <!-- 按钮 -->
+      <div style="margin-top: 35px;">
+        <button onclick="loginBtn()" type="button" class="btn btn-primary btn-lg">登录</button>
+        <button id="btn2" type="button" class="btn btn-success btn-lg" style="float: right;">注册</button>
+      </div>
+    </div>
+
+    <!-- 注册页面 -->
+    <div class="register">
+      <!-- 返回登陆界面 -->
+      <span id = "back" class="glyphicon glyphicon-arrow-left" style="display: block;
+      margin-top: -17px;margin-bottom: 8px;color: white;font-size: 23px;cursor: pointer;">
+      </span>
+      <!-- 标题栏 -->
+      <div style="height: 40px;">
+        <span class="caret" style="float: left; transform: translateY(20px) scale(1.6) rotate(-90deg);"></span>
+        <h3 style="float:left; margin: 0;margin-left: 60px; font-size: 28px; line-height: 40px; height: 40px;">教学信息统计系统
+        </h3>
+        <span class="caret" style="float: right; transform: translateY(20px) scale(1.6) rotate(90deg);"></span>
+      </div>
+      <!-- 用户姓名 -->
+      <div class="input-group" style="margin-top: 25px">
+        <span class="input-group-addon" style="height: 41px; border-radius: 50% 0 0 50%;"><span
+            class="glyphicon glyphicon-user"></span></span>
+        <input type="text" class="form-control" placeholder="输入姓名" aria-describedby="sizing-addon1"
+          autofocus="autofocus" style="height: 40px; border-radius: 0 25px 25px 0;">
+      </div>
+      <!-- 注册账号 -->
+      <div class="input-group" style="margin-top: 25px">
+        <span class="input-group-addon" style="height: 41px; border-radius: 50% 0 0 50%;"><span
+            class="glyphicon glyphicon-user"></span></span>
+        <input type="text" class="form-control" placeholder="输入账号（必须是纯数字）" aria-describedby="sizing-addon1"
+          autofocus="autofocus" style="height: 40px; border-radius: 0 25px 25px 0;">
+        <small class="reminder">该账号已经注册</small>
+      </div>
+      <!-- 注册密码 -->
+      <div class="input-group" style="margin-top: 25px">
+        <span class="input-group-addon" style="height: 41px; border-radius: 50% 0 0 50%"><span
+            class="glyphicon glyphicon-lock"></span></span>
+        <input type="password" class="form-control" placeholder="请输入密码" aria-describedby="sizing-addon1"
+          style="height: 40px; border-radius: 0 25px 25px 0;">
+      </div>
+      <!-- 注册按钮 -->
+      <button onclick="registerBtn()" id="btn3" type="button" class="btn btn-success btn-lg btn-block"
+        style="margin-top: 30px;">注册</button>
+    </div>
+  </div>
+
+  <script>
+    let register = document.querySelector('.register');
+    let btn2 = document.querySelector('#btn2');
+    let login = document.querySelector('.login');
+    // 登录页面 和 注册页面 的 切换
+    btn2.addEventListener('click', function () {
+      login.className = 'login move';
+      register.className = 'register move';
+    })
+    // 返回登录界面
+    function back() {
+      let back = document.querySelector('#back'); 
+      back.addEventListener('click', function() {
+        login.className = 'login back';
+        register.className = 'register back';
+      })
+    }
+    back();
+    // 点击注册按钮 
+    function registerBtn() {
+      let input = document.querySelectorAll(".register input");
+      let setData = new Object();
+      setData.teacherId = input[1].value;
+      setData.userName = input[0].value;
+      setData.password = input[2].value;
+      sessionStorage.setItem('userName', input[0].value);
+      //处理函数
+      function registerDeal(getData) {
+        if (getData.message === '添加成功！') {
+          // delete setData.userName;
+          function recordId(getData) {
+            sessionStorage.setItem("token", getData.data.token);
+            sessionStorage.setItem("userId", getData.data.userId);
+            window.location.href = 'userInfo.html';
+          }
+          ajax('post', 'login', setData, recordId, 0);
+        } else {
+          let reminder = document.querySelector('.register .reminder');
+          reminder.style.display = 'block';
+          reminder.previousElementSibling.focus();
+          reminder.previousElementSibling.select();
+        }
+      }
+      ajax('post', 'register', setData, registerDeal, 0);
+    }
+    // 点击登录按钮
+    function loginBtn() {
+      let input = document.querySelectorAll(".login input");
+      let setData = new Object();
+      setData.teacherId = input[0].value;
+      setData.password = input[1].value;
+      function loginDeal(getData) {
+        if (getData.message === 'success!') {
+          sessionStorage.setItem('userId', getData.data.userId);
+          sessionStorage.setItem('token', getData.data.token);
+          sessionStorage.setItem('userName', getData.data.userName);
+          let token = getData.data.token;
+          //获取所有的班级id和classname，存储进sessionStroage
+          let setData3 = 'userId=' + sessionStorage.getItem('userId');
+          ajax('get', 'getClassesByUserId', setData3, function (getData) {
+            let stus = new Array();
+            for (let i = 0; i < getData.data.length; ++i) {
+              let stu = new Object();
+              stu.classId = getData.data[i].classId;
+              stu.className = getData.data[i].className;
+              stus.push(stu);
+            }
+            sessionStorage.setItem('classId', stus[0].classId);
+            sessionStorage.setItem('className', stus[0].className);
+            sessionStorage.setItem('class', JSON.stringify(stus));
+            // 获取对应的班级的课程id 和 courseName 
+            let setData4 = 'classId=' + stus[0].classId;
+            ajax('get', 'getCourseByClassId', setData4, function(getData) {
+              sessionStorage.setItem('courseId', getData.data[0].courseId);
+              sessionStorage.setItem('courseName', getData.data[0].courseName);
+              location.href = 'homePage.html';
+            }, token);
+          }, token);
+        } else {
+          let reminder = document.querySelector('.login .reminder');
+          reminder.style.display = 'block';
+          reminder.previousElementSibling.focus();
+          reminder.previousElementSibling.select();
+        }
+      }
+      ajax('post', 'login', setData, loginDeal, 0);
+    }
+  </script>
+
+</body>
+
+</html>

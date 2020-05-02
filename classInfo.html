@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教学进度统计-班级信息</title>
+    <link rel="shortcut icon" href="img/tubiao.ico" type="image/x-icon">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/classinfo.css">
+    <script src="js/jQuery.min.js"></script>
+    <script src="js/classInfo.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/ajax.js"></script>
+</head>
+
+<body>
+    <h1 class="nav">班级信息 <small><a href="homePage.html">返回首页</a></small></h1>
+
+    <div class="container">
+        <!-- 班级信息查询导航 -->
+        <div class="grade">
+            <ul class="clearfix">
+            </ul>
+        </div>
+        <!-- 班级信息 -->
+        <div class="gradeInfo">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success">
+                    <h3>班级人数</h3>
+                    <span>30人</span>
+                </li>
+                <li class="list-group-item list-group-item-info">
+                    <h3>课程名称</h3>
+                    <span>数据库</span>
+                </li>
+                <li class="list-group-item list-group-item-warning">
+                    <h3>课程简介</h3>
+                    <span>好考、高分</span>
+                </li>
+                <li class="list-group-item list-group-item-danger">
+                    <h3>课程总学时</h3>
+                    <span>150学时</span>
+                </li>
+                <li class="list-group-item list-group-item-info">
+                    <h3>已完成学时</h3>
+                    <span>150学时</span>
+                </li>
+            </ul>
+            <!-- 点击按钮 弹出模态框 修改信息 -->
+            <button class="btn btn-info" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">修改班级信息</button>
+            <button class="btn btn-danger" id="delete">删除班级</button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="exampleModalLabel">班级信息</h4>
+                    </div>
+                    <div class="modal-body">
+                      <form class="form-horizontal">
+                        <div class="form-group">
+                          <label for="inputPassword1" class="col-sm-2 control-label" style="padding: 0;">班级名称：</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputPassword1" placeholder="输入班级名称">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputPassword3" class="col-sm-2 control-label" style="padding: 0;">课程名称：</label>
+                          <div class="col-sm-10">
+                            <input type="text" id="inputPassword3" class="form-control" >
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputPassword4" class="col-sm-2 control-label" style="padding: 0;">课程简介：</label>
+                          <div class="col-sm-10">
+                            <textarea type="text" id="inputPassword4" class="form-control"></textarea>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputPassword5" class="col-sm-2 control-label" style="padding: 0;">课程总学时：</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputPassword5" placeholder="输入纯数字">
+                          </div>
+                        </div>
+                        
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                      <button type="button" class="btn btn-primary">提交修改</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+        <!-- 本班的学生信息 -->
+        <div class="stuInfo">
+            <h3>班级学生信息</h3>
+            <div class="form">
+                <table class="table table-striped table-bordered" id="students">
+                    <thead>
+                        <tr>
+                            <th>学号</th>
+                            <th>姓名</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>教学进度统计
+    <link rel="shortcut icon" href="img/tubiao.ico" type="image/x-icon">
+  </title>
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/userInfo.css">
+  <script src="js/ajax.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">注册成功，请录入个人及班级信息</h3>
+      </div>
+      <div class="panel-body">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label text-left" style="padding: 0;">班级名称：</label>
+            <div class="col-sm-10">
+              <input type="email" class="form-control" id="inputEmail3">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword2" class="col-sm-2 control-label" style="padding: 0;">班级人数：</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputPassword2" placeholder="输入纯数字">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputPassword4" class="col-sm-2 control-label" style="padding: 0;">班级所教课程：</label>
+            <div class="col-sm-10">
+              <input type="text" id="inputPassword4" class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword5" class="col-sm-2 control-label" style="padding: 0;">课程简介：</label>
+            <div class="col-sm-10">
+              <textarea type="text" id="inputPassword5" class="form-control"
+                style="height: 120px;resize: none;"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword6" class="col-sm-2 control-label" style="padding: 0;">课程总学时：</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputPassword6" placeholder="输入纯数字">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword7" class="col-sm-2 control-label" style="padding: 0;">已完成学时：</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputPassword7" placeholder="输入纯数字">
+            </div>
+          </div>
+        </form>
+        <!-- 录入本班的学生信息 -->
+        <table class="table table-striped table-bordered" id="students">
+          <thead>
+            <tr>
+              <th>学号</th>
+              <th>姓名</th>
+              <!-- <th>是否是补修生</th> -->
+              <th>修改</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+        <button type="button" class="btn btn-info" id="studentsBtn">
+          <span class="glyphicon glyphicon-plus"></span> 添加学生信息
+        </button>
+      </div>
+      <div class="panel-footer">
+        <button onclick="enterHome()" class="btn btn-primary">进入首页 &nbsp;&nbsp;&nbsp;<span
+            class="glyphicon glyphicon-arrow-right"></span></button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    //ajax 检查是否登录
+    function inits() {
+      let token = sessionStorage.getItem('token');
+      if (!token) {
+        location.href = 'login.html';
+      }
+    }
+    inits();
+
+    function addStu() {
+      let tbody = document.querySelector('#students tbody');
+      let btn = document.querySelector('#studentsBtn');
+      tbody.addEventListener('click', function (e) {
+        if (e.target.tagName.toLowerCase() === 'span') {
+          let tr = e.target.parentNode.parentNode.parentNode.parentNode;
+          let val = new Array();
+          for (let i = 0; i < tr.children.length - 1; ++i) {
+            val[i] = tr.children[i].innerHTML;
+          };
+          if (e.target.className === 'glyphicon glyphicon-pencil') {
+            e.target.className = 'glyphicon glyphicon-ok';
+            e.target.parentNode.nextElementSibling.children[0].className = 'glyphicon glyphicon-remove';
+            let sibling = e.target.parentNode.nextElementSibling.children[0];
+            for (let i = 0; i < tr.children.length - 1; ++i) {
+              tr.children[i].innerHTML = '<input type="text">';
+              // tr.children[i].style.verticalAlign = 'middle';
+              tr.children[i].style.width = '26%';
+              tr.children[i].children[0].style.width = "100%";
+              tr.children[i].children[0].value = val[i];
+              tr.children[i].setAttribute('data-con', val[i]);
+            }
+
+          } else if (e.target.className === 'glyphicon glyphicon-trash') {
+            tr.parentNode.removeChild(tr);
+          } else if (e.target.className === 'glyphicon glyphicon-ok') {
+            // e.stopPropagation();
+            e.target.className = 'glyphicon glyphicon-pencil';
+            e.target.parentNode.nextElementSibling.children[0].className = 'glyphicon glyphicon-trash';
+            for (let i = 0; i < tr.children.length - 1; ++i) {
+              let val = tr.children[i].children[0].value;
+              tr.children[i].innerHTML = val;
+              // tr.children[i].style.verticalAlign = 'middle';
+              tr.children[i].style.width = '';
+              tr.children[i].setAttribute('data-con', '');
+            }
+          } else if (e.target.className === 'glyphicon glyphicon-remove') {
+            // e.stopPropagation();
+            e.target.className = 'glyphicon glyphicon-trash';
+            e.target.parentNode.previousElementSibling.children[0].className = 'glyphicon glyphicon-pencil';
+            for (let i = 0; i < tr.children.length - 1; ++i) {
+              tr.children[i].innerHTML = tr.children[i].getAttribute('data-con');
+              // tr.children[i].style.verticalAlign = 'middle';
+              tr.children[i].style.width = '';
+              tr.children[i].setAttribute('data-con', '');
+            }
+          }
+        }
+      })
+      btn.addEventListener('click', function () {
+        let tr = '<tr><td></td><td></td>' +
+          '<td>' +
+          '<div class="btn-group btn-group-xs" role="group" style="float: right;">' +
+          ' <button type="button" class="btn btn-default">' +
+          ' <span class="glyphicon glyphicon-pencil"></span>' +
+          '</button>' +
+          '<button type="button" class="btn btn-default">' +
+          '<span class="glyphicon glyphicon-trash"></span>' +
+          '</button>' +
+          '</div>' +
+          '</td>' +
+          '</tr>';
+        tbody.insertAdjacentHTML('beforeend', tr);
+      });
+    }
+    addStu();
+
+
+    // 含Ajax的js
+    function enterHome() {
+      // 检测信息是否填写完整
+      let reg = /^\s*$/;
+      let reg1 = /^([1-9][0-9]*)$/; //检验是否时数字
+      let state = 1;  //信息是否完整
+      let token = sessionStorage.getItem('token');
+      let inputs = document.querySelectorAll('.form-group div');
+      let td = document.querySelectorAll('#students tbody td');
+      let tbody = document.querySelector('#students tbody');
+      for (let i = 0; i < inputs.length; ++i) {
+        if (reg.test(inputs[i].children[0].value)) {
+          state = 0;
+          alert("请输入" + inputs[i].previousElementSibling.innerHTML);
+          inputs[i].children[0].select();
+          return;
+        }
+      }
+      if (reg1.test(inputs[1].children[0].value) === false) {
+        alert("班级人数请输入数字");
+        return;
+      } else if (reg1.test(inputs[4].children[0].value) === false) {
+        alert("总学时请输入数字");
+        return;
+      } else if (/^([0-9]*)$/.test(inputs[5].children[0].value) === false) {
+        alert("已完成学时请输入数字");
+        return;
+      };
+      if (tbody.children[0] === undefined) {
+        alert('请录入学生信息');
+        return;
+      } else if (tbody.children.length < inputs[1].children[0].value) {
+        state = 0;
+        alert("学生人数不完整，请输入完整的学生信息");
+        return;
+      } else if (tbody.children.length > inputs[1].children[0].value) {
+        state = 0;
+        alert("学生人数超数，请检查学生信息");
+        return;
+      }
+      for (let i = 0; i < td.length; ++i) {
+        if (i % td[i].parentNode.children.length != td[i].parentNode.children.length - 1) {
+          if (td[i].innerHTML === '') {
+            state = 0;
+            alert("请输入完整的学生信息");
+            return;
+          } else if (td[i].children[0]) {
+            state = 0;
+            alert("请在学生修改栏点击√");
+            return;
+          } else if (i % td[i].parentNode.children.length === 0) {
+            if (reg1.test(td[i].innerHTML) === false) {
+              alert('学号请输入数字');
+              return;
+            }
+          }
+        }
+      }
+      // 如果信息填写完整
+      if (state) {
+        // 添加班级
+        let setData1 = new Object();
+        setData1.className = inputs[0].children[0].value;
+        setData1.classStudentNum = inputs[1].children[0].value;
+        setData1.userId = sessionStorage.getItem('userId');
+        ajax('post', 'addClass', setData1, function () {
+          //获取所有的班级id和classname，存储进sessionStroage
+          let setData3 = 'userId=' + sessionStorage.getItem('userId'); 
+          ajax('get', 'getClassesByUserId', setData3, function (getData) {
+            let stus = new Array();
+            for (let i = 0; i < getData.data.length; ++i) {
+              let stu = new Object();
+              stu.classId = getData.data[i].classId;
+              stu.className = getData.data[i].className;
+              stus.push(stu);
+            }
+            sessionStorage.setItem('class', JSON.stringify(stus));
+            //添加课程
+            let setData2 = new Object();
+            setData2.courseName = inputs[2].children[0].value;
+            setData2.courseIntroduction = inputs[3].children[0].value;
+            setData2.courseHours = inputs[4].children[0].value;
+            setData2.courseFinishHours = inputs[5].children[0].value;
+            let classs = JSON.parse(sessionStorage.getItem('class'));
+            setData2.classId = classs[classs.length - 1].classId;
+            ajax('post', 'addCourse', setData2, function () {
+              //添加对应的班级id 和 name
+              sessionStorage.setItem('classId', classs[0].classId);
+              sessionStorage.setItem('className', classs[0].className);
+              // 获取对应课程的 courseId
+              let setData = 'classId=' + classs[0].classId;
+              ajax('get', 'getCourseByClassId', setData, function (getData) {
+                sessionStorage.setItem('courseId', getData.data[0].courseId);
+                sessionStorage.setItem('courseName', getData.data[0].courseName);
+                // 添加学生
+                var setData4 = new Array();
+                var setData5 = new Object();
+                for (let i = 0; i < td.length; ++i) {
+                  if (i % td[i].parentNode.children.length == 0) {
+                    setData5.studentId = td[i].innerHTML;
+                  } else if (i % td[i].parentNode.children.length == 1) {
+                    setData5.studentName = td[i].innerHTML;
+                  } else if (i % td[i].parentNode.children.length == 2) {
+                    setData5.classId = classs[classs.length-1].classId;
+                    setData4.push(setData5);
+                    var setData5 = new Object();
+                  }
+                };
+                ajax('post', 'addStudents', setData4, function () {
+                  location.href = 'homePage.html';
+                }, token);
+              }, token)
+            }, token);
+          }, token);
+
+        }, token);
+      }
+    }
+  </script>
+</body>
+
+</html>

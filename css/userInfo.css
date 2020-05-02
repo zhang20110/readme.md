@@ -1,0 +1,13 @@
+.panel {
+    margin-top: 10px;
+}
+.panel-footer button {
+    transition: width 700ms;
+}
+.panel-footer button:hover {
+    width: 131px;
+}
+.panel-footer button:hover span{
+    transition: all 700ms;
+    transform: translateX(17px);
+}

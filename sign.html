@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>教学进度统计-签到统计</title>
+  <link rel="shortcut icon" href="img/tubiao.ico" type="image/x-icon">
+  <script src="js/jQuery.min.js"></script>
+  <script src="js/Chart.min.js"></script>
+  <script src="js/sign.js"></script>
+  <script src="js/ajax.js"></script>
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/sign.css">
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <h1 class="nav">签到统计 <small><a href="homePage.html">返回首页</a></small></h1>
+  <div class="container">
+    <!-- 班级信息查询导航 -->
+    <div class="grade">
+      <ul class="clearfix">
+      </ul>
+    </div>
+  </div>
+  <!-- 查询某一天的签到情况 -->
+  <div class="container"
+    style="margin-top: 10px;height: 120px;background-color: rgb(90, 103, 120);border-radius: 10px;">
+    <div class="search">
+      <span>请输入查询的日期：</span>
+      <input type="date">
+      <span style="margin-left: 30px;">学生学号</span>
+      <input type="text">
+      <button>提交</button>
+    </div>
+  </div>
+  <!-- 最近一天的签到统计 -->
+  <div class="container">
+    <div class="signIn">
+      <div class="signInAlert alert alert-success" role="alert">
+        班级实际人数 <span class="signInBadge">100%</span>
+
+      </div>
+      <div class="signInAlert alert alert-success" role="alert">
+        今日的未签到人数 <span class="signInBadge">100%</span>
+        <br>
+        <span class="caret carRotate"></span>
+        <!-- 未签到的学生 -->
+        <div class="stu">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>学号</th>
+                <th>学生姓名</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="signInAlert alert alert-success" role="alert">
+        今日的签到率 <span class="signInBadge">100%</span>
+      </div>
+    </div>
+    <!-- 签到学生的表格 -->
+    <div class="stuTable">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>学号</th>
+            <th>姓名</th>
+            <th>日期</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr></tr>
+        </tbody>
+      </table>  
+    </div>
+  </div>
+  <!-- 签到统计表 -->
+  <div class="container" style="margin-top: 50px;">
+    <canvas id="myChart" width="400" height="150"></canvas>
+  </div>
+</body>
+
+</html>
